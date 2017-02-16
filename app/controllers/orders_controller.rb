@@ -3,14 +3,6 @@ class OrdersController < ApplicationController
   def show
     @order = Order.find(params[:id])
     @line_items = LineItem.where(order_id: params[:id])
-    # @lines = @line_items.map do |line_item|
-    #   Product.where(id: line_item.product_id), line_item
-    # end
-
-    # @line_items.each do |line_item|
-    #   @product = Product.where(id: line_item.product_id)
-    #   @lines.push({product: @product, line_item: line_item})
-    # end
   end
 
   def create
@@ -18,6 +10,9 @@ class OrdersController < ApplicationController
     order  = create_order(charge)
 
     if order.valid?
+      # Send email notification to user
+      UserMailer.order_confirmation_email(order).deliver_later
+
       empty_cart!
       redirect_to order, notice: 'Your Order has been placed.'
     else
@@ -46,10 +41,11 @@ class OrdersController < ApplicationController
 
   def create_order(stripe_charge)
     order = Order.new(
-      email: params[:stripeEmail],
+      email: 'srveale42@gmail.com',
       total_cents: cart_total,
       stripe_charge_id: stripe_charge.id, # returned by stripe
     )
+
     cart.each do |product_id, details|
       if product = Product.find_by(id: product_id)
         quantity = details['quantity'].to_i
