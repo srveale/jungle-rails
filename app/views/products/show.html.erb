@@ -26,6 +26,30 @@
       </div>
     </div>
 
+    <%= form_for [@product, @review] do |f| %>
+      <div class="field">
+        <%= f.label :description%>
+        <%= f.text_area :description %>
+      </div>
+
+      <div class="rating-submission">
+        <%= f.label :rating %>
+        <%= f.select(:rating, [[1,1], [2,2], [3,3], [4,4], [5,5]]) %>
+      </div>
+
+      <div><%= f.submit "Submit", class: "btn btn-primary" %></div>
+    <% end %>
+
+    <div class="row">
+    <% @reviews.each do |review|%>
+      <div>
+        <p>Review by: Customer <%=review.user_id%></p>
+        <p>Description: <%= review.description %> </p>
+        <p>Rating: <%= review.rating %> </p>
+      </div>
+    <% end %>
+    </div>
+
   </article>
 
 </section>

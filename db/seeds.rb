@@ -132,5 +132,18 @@ cat3.products.create!({
   price: 2_483.75
 })
 
+## REVIEWS
+
+puts "What's the deal with reviews"
+
+
+Review.create(product_id: 1, user_id: 1, description: 'great', rating: 4)
+Review.create(product_id: 2, user_id: 1, description: 'wow', rating: 3)
+Review.create(product_id: 3, user_id: 1, description: 'unreal', rating: 5)
+Review.create(product_id: 4, user_id: 1, description: 'fantastico', rating: 2)
+Review.create(product_id: 5, user_id: 1, description: "i'm not good at computer", rating: 1)
+Review.create(product_id: 1, user_id: 1, description: 'giggity', rating: 1)
+Review.create(product_id: 2, user_id: 1, description: 'pls', rating: 2)
+Review.create(product_id: 3, user_id: 1, description: 'taken 5: the takening', rating: 2)
 
 puts "DONE!"
