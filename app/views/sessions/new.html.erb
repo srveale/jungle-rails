@@ -1,6 +1,13 @@
 <h1>Login</h1>
 
 <div class="row">
+  <div class="col-sm-6">
+    <h3><em><%= session[:error_message] %> </em></h3>
+  </div>
+  <% session[:error_message] = nil %>
+</div>
+
+<div class="row">
   <div class="col-sm-6 col-sm-offset-1">
       <%= form_for :user, url: "/login" do |form| %>
 
