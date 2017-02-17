@@ -3,7 +3,6 @@ class SessionsController < ApplicationController
   end
 
   def create
-    puts "hey"
     user = User.find_by_email(params[:user][:email])
     puts user.inspect
     # If the user exists AND the password entered is correct.
@@ -14,6 +13,7 @@ class SessionsController < ApplicationController
       redirect_to '/'
     else
     # If user's login doesn't work, send them back to the login form.
+      flash[:error] = "Incorrect Login Information"
       redirect_to '/login'
     end
   end
