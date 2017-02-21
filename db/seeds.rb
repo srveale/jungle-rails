@@ -83,6 +83,14 @@ cat1.products.create!({
   price: 224.50
 })
 
+cat1.products.create!({
+  name:  'Human Feet Shoes (Sold Out)',
+  description: Faker::Hipster.paragraph(4),
+  image: open_asset('apparel6.jpg'),
+  quantity: 0,
+  price: 224.50
+})
+
 
 cat2.products.create!({
   name:  'Modern Skateboards',

@@ -8,6 +8,9 @@ class UsersController < ApplicationController
       session[:user_id] = user.id
       redirect_to '/'
     else
+      session[:error_message] = "Make sure your passwords match and your email is not already registered"
+      puts 'USER SAVE ERRORS'
+      puts user.errors[:messages]
       redirect_to '/signup'
     end
   end
