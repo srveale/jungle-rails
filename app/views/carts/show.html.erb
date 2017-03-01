@@ -4,6 +4,13 @@
     <h1>My Cart</h1>
   </header>
 
+  <div class="row">
+    <div class="col-sm-6">
+      <h3><em><%= session[:error_message] %> </em></h3>
+    </div>
+    <% session[:error_message] = nil %>
+  </div>
+
   <% if cart.size ==0 %>
     <h4> Your cart is empty. Please exercise your right as a capitalist to continue shopping!</h4>
     <%= link_to "Continue Shopping", root_path, class: 'btn btn-lg btn-primary' %>

@@ -1,5 +1,12 @@
 <section class="products-index">
 
+  <div class="row">
+    <div class="col-sm-6">
+      <h3><em><%= session[:error_message] %> </em></h3>
+    </div>
+    <% session[:error_message] = nil %>
+  </div>
+
   <header class="page-header">
     <h1>Products</h1>
   </header>

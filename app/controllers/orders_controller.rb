@@ -1,5 +1,10 @@
 class OrdersController < ApplicationController
 
+  def current_user
+    @current_user ||= User.find(session[:user_id]) if session[:user_id]
+  end
+  helper_method :current_user
+
   def show
     @order = Order.find(params[:id])
     @line_items = LineItem.where(order_id: params[:id])
@@ -33,14 +38,15 @@ class OrdersController < ApplicationController
     Stripe::Charge.create(
       source:      params[:stripeToken],
       amount:      cart_total, # in cents
-      description: "Khurram Virani's Jungle Order",
+      description: "Jungle Order",
       currency:    'cad'
     )
   end
 
   def create_order(stripe_charge)
     order = Order.new(
-      email: 'srveale42@gmail.com',
+      # email: 'srveale42@gmail.com',
+      email: current_user.email || "test@example.com",
       total_cents: cart_total,
       stripe_charge_id: stripe_charge.id, # returned by stripe
     )
@@ -48,6 +54,12 @@ class OrdersController < ApplicationController
     cart.each do |product_id, details|
       if product = Product.find_by(id: product_id)
         quantity = details['quantity'].to_i
+        puts "product.quantity"
+        puts product.quantity
+        product.quantity -= quantity
+        product.save
+        puts "product.quantity"
+        puts product.quantity
         order.line_items.new(
           product: product,
           quantity: quantity,
